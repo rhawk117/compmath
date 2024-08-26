@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="AppUI\CommandLineInterface.cs" />
     <Compile Include="Calculations\Converter.cs" />
+    <Compile Include="Commands\CommandParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="AppUI\Prompts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,9 +100,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8.1">
       <Visible>False</Visible>

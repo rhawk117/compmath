@@ -12,13 +12,14 @@ namespace compmath
             int quotient = decimalNumber;
 
             Prompts.VerboseMessage(string.Format("Converting {0} to binary:", decimalNumber));
-            Prompts.VerboseMessage("Press Enter to continue through each step.");
+            Prompts.EnterDialogue();
             Console.ReadKey();
 
             while (quotient > 0)
             {
                 int remainder = quotient % 2;
                 remainders.Add(remainder);
+
                 Prompts.VerboseMessage(string.Format("{0} ÷ 2 = {1} remainder {2}",
                 quotient, quotient / 2, remainder));
 
@@ -35,7 +36,7 @@ namespace compmath
         public string BinaryToDecimal(string binaryNumber)
         {
             Prompts.VerboseMessage(string.Format("Converting {0} to decimal:", binaryNumber));
-            Prompts.VerboseMessage("Press Enter to continue through each step.");
+            Prompts.EnterDialogue();
             Console.ReadKey();
 
             int result = 0;
@@ -55,7 +56,7 @@ namespace compmath
         public string HexToBinary(string hexNumber)
         {
             Prompts.VerboseMessage(string.Format("Converting {0} to binary:", hexNumber));
-            Prompts.VerboseMessage("Press Enter to continue through each step.");
+            Prompts.EnterDialogue();
             Console.ReadKey();
 
             string result = "";
@@ -74,7 +75,7 @@ namespace compmath
         public string BinaryToHex(string binaryNumber)
         {
             Prompts.VerboseMessage(string.Format("Converting {0} to hexadecimal:", binaryNumber));
-            Prompts.VerboseMessage("Press Enter to continue through each step.");
+            Prompts.EnterDialogue();
 
             Console.ReadKey();
 
@@ -104,7 +105,7 @@ namespace compmath
             int quotient = decimalNumber;
 
             Prompts.VerboseMessage(string.Format("Converting {0} to hexadecimal:", decimalNumber));
-            Prompts.VerboseMessage("Press Enter to continue through each step.");
+            Prompts.EnterDialogue();
 
             Console.ReadKey();
 
@@ -133,19 +134,21 @@ namespace compmath
         public string HexToDecimal(string hexNumber)
         {
             Prompts.VerboseMessage(string.Format("Converting {0} to decimal:", hexNumber));
-            Prompts.VerboseMessage("Press Enter to continue through each step.");
+            Prompts.EnterDialogue();
 
             Console.ReadKey();
 
             int result = 0;
             for (int i = 0; i < hexNumber.Length; i++)
             {
-                int digitValue = Convert.ToInt32(hexNumber[hexNumber.Length - 1 - i].ToString(), 16);
+                int hexDigit = hexNumber[hexNumber.Length - 1 - i];
+                int digitValue = Convert.ToInt32(hexDigit
+                                .ToString(), 16);
                 int value = digitValue * (int)Math.Pow(16, i);
                 result += value;
-                int hexDig = hexNumber[hexNumber.Length - 1 - i];
+
                 AnsiConsole.MarkupLine(string.Format(
-                    "Hex digit {0} at position {1} contributes {2}", hexDig, i, value));
+                    "Hex digit {0} at position {1} contributes {2}", hexDigit, i, value));
                 Console.ReadKey();
             }
             Prompts.ConvertedOutput(string.Format(

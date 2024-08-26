@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using System;
+using compmath.Commands;
 
 namespace compmath
 {
@@ -27,7 +28,6 @@ namespace compmath
 
                 ProcessCommands(input.Split(' '));
             }
-
             Prompts.InfoMessage("Thank you for using CompMath!");
         }
 
@@ -39,7 +39,8 @@ namespace compmath
                            || Array.IndexOf(args, "--verbose") >= 0;
 
             args = Array.FindAll(args, arg =>
-                   arg != "-v" && arg != "--verbose");
+                   arg != "-v" && arg != "--verbose"
+            );
 
             switch (args[0].ToLower())
             {
@@ -51,7 +52,7 @@ namespace compmath
                 case "binary2hex":
                 case "decimal2hex":
                 case "hex2decimal":
-                    handleCommand(args, verbose);
+                    HandleCommand(args, verbose);
                     break;
 
                 case "help":
@@ -64,11 +65,13 @@ namespace compmath
             }
         }
 
-        private void handleCommand(string[] args, bool verbose)
+        private void HandleCommand(string[] args, bool verbose)
         {
             if (args.Length != 2)
             {
-                Prompts.ErrorMessage(string.Format("Invalid Command, cannot parse input. Use '{0} <number>'", args[0]));
+                Prompts.ErrorMessage(string.Format(
+                    "Invalid Command, cannot parse input. Use '{0} <number>'", args[0])
+                );
             }
             else
             {
@@ -110,6 +113,8 @@ namespace compmath
                     result = StandardConversion(command, input);
                     Prompts.ConvertedOutput(result);
                 }
+
+                if (result == string.Empty) DisplayHelp();
             }
             catch (FormatException)
             {
@@ -130,7 +135,7 @@ namespace compmath
             switch (command.ToLower())
             {
                 case "decimal2binary":
-                    return verboseCalc.DecimalToBinary(int.Parse(input));
+                    return verboseCalc.DecimalToBinary(CommandParser.CheckDecimalInput(input));
 
                 case "binary2decimal":
                     return verboseCalc.BinaryToDecimal(input);
@@ -142,13 +147,16 @@ namespace compmath
                     return verboseCalc.BinaryToHex(input);
 
                 case "decimal2hex":
-                    return verboseCalc.DecimalToHex(int.Parse(input));
+                    return verboseCalc.DecimalToHex(CommandParser.CheckDecimalInput(input));
 
                 case "hex2decimal":
                     return verboseCalc.HexToDecimal(input);
 
                 default:
-                    throw new ArgumentException("Invalid command");
+                    Prompts.ErrorMessage(
+                        "Command Argument Invalid and Could not be parsed, Type help to view all commands & Syntax"
+                     );
+                    return string.Empty;
             }
         }
 
@@ -157,7 +165,7 @@ namespace compmath
             switch (command.ToLower())
             {
                 case "decimal2binary":
-                    return standardCalc.DecimalToBinary(int.Parse(input));
+                    return standardCalc.DecimalToBinary(CommandParser.CheckDecimalInput(input));
 
                 case "binary2decimal":
                     return standardCalc.BinaryToDecimal(input).ToString();
@@ -169,14 +177,23 @@ namespace compmath
                     return standardCalc.BinaryToHex(input);
 
                 case "decimal2hex":
-                    return standardCalc.DecimalToHex(int.Parse(input));
+                    return standardCalc.DecimalToHex(CommandParser.CheckDecimalInput(input));
 
                 case "hex2decimal":
                     return standardCalc.HexToDecimal(input).ToString();
 
                 default:
-                    throw new ArgumentException("Invalid command");
+                    Prompts.ErrorMessage(
+                        "Command Argument Invalid and Could not be parsed, Type help to view all commands & Syntax");
+                    return string.Empty;
             }
         }
+
+
+
+
+
+
+
     }
 }

@@ -9,7 +9,6 @@ namespace compmath
 
         public static void Header()
         {
-            AnsiConsole.Clear();
             AnsiConsole.MarkupLine($"[bold green]{divider}[/]");
             AnsiConsole.Write(new FigletText("CompMath").Color(Color.Green));
             AnsiConsole.MarkupLine("[italic blue] \t\t(^) made by: rhawk117 (v) [/]");
@@ -33,5 +32,10 @@ namespace compmath
 
         public static void ConvertedOutput(string convertedNumber) =>
             AnsiConsole.MarkupLine($"[bold yellow](>) {convertedNumber} (<)[/]");
+
+        public static void EnterDialogue() =>
+            AnsiConsole.MarkupLine(
+                "[italic gray](#) Press [bold]ENTER[/] to Continue through each step... (#)[/]"
+             );
     }
 }
