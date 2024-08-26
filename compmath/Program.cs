@@ -10,22 +10,18 @@ namespace compmath
     {
         static void Main(string[] args)
         {
+            Converter converter = new Converter();
+            VerboseConversions verboseConverter = new VerboseConversions();
+            CommandLineInterface cli = new CommandLineInterface(converter, verboseConverter);
 
-            Prompts.Header();
-
-
-            //Converter converter = new Converter();
-            //VerboseConversions verboseConverter = new VerboseConversions();
-            //CommandLineInterface cli = new CommandLineInterface(converter, verboseConverter);
-
-            //if (args.Length == 0)
-            //{
-            //    cli.RunInteractive();
-            //}
-            //else
-            //{
-            //    cli.ProcessCommand(args);
-            //}
+            if (args.Length == 0)
+            {
+                cli.RunInteractive();
+            }
+            else
+            {
+                cli.ProcessCommands(args);
+            }
         }
     }
 }

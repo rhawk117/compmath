@@ -1,43 +1,46 @@
 ﻿using Spectre.Console;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace compmath
 {
-    class VerboseConversions
+    public class VerboseConversions
     {
         public string DecimalToBinary(int decimalNumber)
         {
             List<int> remainders = new List<int>();
             int quotient = decimalNumber;
 
-            AnsiConsole.MarkupLine($"[bold]Converting {decimalNumber} to binary:[/]");
-            AnsiConsole.MarkupLine("[gray]Press Enter to continue through each step.[/]");
-            Console.ReadLine();
+            Prompts.VerboseMessage(string.Format("Converting {0} to binary:", decimalNumber));
+            Prompts.VerboseMessage("Press Enter to continue through each step.");
+            Console.ReadKey();
 
             while (quotient > 0)
             {
                 int remainder = quotient % 2;
                 remainders.Add(remainder);
-                AnsiConsole.MarkupLine($"{quotient} ÷ 2 = {quotient / 2} remainder {remainder}");
+                Prompts.VerboseMessage(string.Format("{0} ÷ 2 = {1} remainder {2}",
+                quotient, quotient / 2, remainder));
+
                 quotient /= 2;
-                Console.ReadLine();
+                Console.ReadKey();
             }
 
             remainders.Reverse();
             string result = string.Join("", remainders);
-            AnsiConsole.MarkupLine($"[green]The binary representation is: {result}[/]");
+            Prompts.ConvertedOutput(string.Format("Conversion Complete: The binary representation is: {0}", result));
             return result;
         }
 
         public string BinaryToDecimal(string binaryNumber)
         {
-            AnsiConsole.MarkupLine($"[bold]Converting {binaryNumber} to decimal:[/]");
-            AnsiConsole.MarkupLine("[gray]Press Enter to continue through each step.[/]");
-            Console.ReadLine();
+            Prompts.VerboseMessage(string.Format("Converting {0} to decimal:", binaryNumber));
+            Prompts.VerboseMessage("Press Enter to continue through each step.");
+            Console.ReadKey();
 
             int result = 0;
             for (int i = 0; i < binaryNumber.Length; i++)
@@ -45,38 +48,39 @@ namespace compmath
                 int digit = binaryNumber[binaryNumber.Length - 1 - i] - '0';
                 int value = digit * (int)Math.Pow(2, i);
                 result += value;
-                AnsiConsole.MarkupLine($"Digit {digit} at position {i} contributes {value}");
+                Prompts.VerboseMessage(string.Format("Digit {0} at position {1} contributes {2}", digit, i, value));
                 Console.ReadLine();
             }
 
-            AnsiConsole.MarkupLine($"[green]The decimal representation is: {result}[/]");
+            Prompts.ConvertedOutput(string.Format("Conversion Complete: The decimal representation is: {0}", result));
             return result.ToString();
         }
 
         public string HexToBinary(string hexNumber)
         {
-            AnsiConsole.MarkupLine($"[bold]Converting {hexNumber} to binary:[/]");
-            AnsiConsole.MarkupLine("[gray]Press Enter to continue through each step.[/]");
-            Console.ReadLine();
+            Prompts.VerboseMessage(string.Format("Converting {0} to binary:", hexNumber));
+            Prompts.VerboseMessage("Press Enter to continue through each step.");
+            Console.ReadKey();
 
             string result = "";
             foreach (char c in hexNumber.ToUpper())
             {
                 string binary = Convert.ToString(Convert.ToInt32(c.ToString(), 16), 2).PadLeft(4, '0');
                 result += binary;
-                AnsiConsole.MarkupLine($"Hex digit {c} converts to binary {binary}");
-                Console.ReadLine();
+                Prompts.VerboseMessage(string.Format("Hex digit {0} converts to binary {1}", c, binary));
+                Console.ReadKey();
             }
 
-            AnsiConsole.MarkupLine($"[green]The binary representation is: {result}[/]");
+            Prompts.VerboseMessage(string.Format("Conversion Complete: The binary representation is: {0}", result));
             return result;
         }
 
         public string BinaryToHex(string binaryNumber)
         {
-            AnsiConsole.MarkupLine($"[bold]Converting {binaryNumber} to hexadecimal:[/]");
-            AnsiConsole.MarkupLine("[gray]Press Enter to continue through each step.[/]");
-            Console.ReadLine();
+            Prompts.VerboseMessage(string.Format("Converting {0} to hexadecimal:", binaryNumber));
+            Prompts.VerboseMessage("Press Enter to continue through each step.");
+
+            Console.ReadKey();
 
             while (binaryNumber.Length % 4 != 0)
             {
@@ -90,11 +94,11 @@ namespace compmath
                 int value = Convert.ToInt32(group, 2);
                 string hex = Convert.ToString(value, 16).ToUpper();
                 result += hex;
-                AnsiConsole.MarkupLine($"Binary group {group} converts to hex {hex}");
-                Console.ReadLine();
+                Prompts.VerboseMessage(string.Format("Binary group {0} converts to hex {1}", group, hex));
+                Console.ReadKey();
             }
 
-            AnsiConsole.MarkupLine($"[green]The hexadecimal representation is: {result}[/]");
+            Prompts.ConvertedOutput(string.Format("Conversion Complete: The hexadecimal representation is: {0}", result));
             return result;
         }
 
@@ -103,31 +107,38 @@ namespace compmath
             List<string> remainders = new List<string>();
             int quotient = decimalNumber;
 
-            AnsiConsole.MarkupLine($"[bold]Converting {decimalNumber} to hexadecimal:[/]");
-            AnsiConsole.MarkupLine("[gray]Press Enter to continue through each step.[/]");
-            Console.ReadLine();
+            Prompts.VerboseMessage(string.Format("Converting {0} to hexadecimal:", decimalNumber));
+            Prompts.VerboseMessage("Press Enter to continue through each step.");
+
+            Console.ReadKey();
 
             while (quotient > 0)
             {
                 int remainder = quotient % 16;
                 string hexDigit = remainder < 10 ? remainder.ToString() : ((char)(remainder - 10 + 'A')).ToString();
                 remainders.Add(hexDigit);
-                AnsiConsole.MarkupLine($"{quotient} ÷ 16 = {quotient / 16} remainder {remainder} (hex: {hexDigit})");
+                int divResult = quotient / 16;
+
+                Prompts.VerboseMessage(string.Format(
+                    "{0} ÷ 16 = {1} remainder {2} (hex: {3})", quotient, divResult, remainder, hexDigit)
+                );
+
                 quotient /= 16;
-                Console.ReadLine();
+                Console.ReadKey();
             }
 
             remainders.Reverse();
             string result = string.Join("", remainders);
-            AnsiConsole.MarkupLine($"[green]The hexadecimal representation is: {result}[/]");
+            Prompts.ConvertedOutput(string.Format(
+                "Conversion Complete: The hexadecimal representation is: {0}", result));
             return result;
         }
 
         public string HexToDecimal(string hexNumber)
         {
-            AnsiConsole.MarkupLine($"[bold]Converting {hexNumber} to decimal:[/]");
-            AnsiConsole.MarkupLine("[gray]Press Enter to continue through each step.[/]");
-            Console.ReadLine();
+            Prompts.VerboseMessage(string.Format("Converting {0} to decimal:", hexNumber));
+            Prompts.VerboseMessage("Press Enter to continue through each step.");
+            Console.ReadKey();
 
             int result = 0;
             for (int i = 0; i < hexNumber.Length; i++)
@@ -135,11 +146,13 @@ namespace compmath
                 int digitValue = Convert.ToInt32(hexNumber[hexNumber.Length - 1 - i].ToString(), 16);
                 int value = digitValue * (int)Math.Pow(16, i);
                 result += value;
-                AnsiConsole.MarkupLine($"Hex digit {hexNumber[hexNumber.Length - 1 - i]} at position {i} contributes {value}");
-                Console.ReadLine();
+                int hexDig = hexNumber[hexNumber.Length - 1 - i];
+                AnsiConsole.MarkupLine(string.Format(
+                    "Hex digit {0} at position {1} contributes {2}", hexDig, i, value));
+                Console.ReadKey();
             }
-
-            AnsiConsole.MarkupLine($"[green]The decimal representation is: {result}[/]");
+            Prompts.ConvertedOutput(string.Format(
+                "Conversion Complete: The decimal representation is: {0}", result));
             return result.ToString();
         }
     }

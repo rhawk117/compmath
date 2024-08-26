@@ -1,36 +1,37 @@
 ﻿using Spectre.Console;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace compmath
 {
     public static class Prompts
     {
-
-        public static string divider = new string('=', 100);
+        private static string divider = new string('=', Console.WindowWidth);
 
         public static void Header()
         {
-            AnsiConsole.MarkupLine($"[bold green]{divider}[/]\n");
-            AnsiConsole.Write(
-                new FigletText("CompMath").Color(Color.Green)
-            );
-            AnsiConsole.MarkupLine("\n\t[bold blue][ developed by: rhawk117 ][/]");
-            AnsiConsole.MarkupLine("\n\t[bold blue](i) Press ENTER to Continue.. (i)[/]");
-            AnsiConsole.MarkupLine($"[bold green]{divider}[/]\n");
+            AnsiConsole.Clear();
+            AnsiConsole.MarkupLine($"[bold green]{divider}[/]");
+            AnsiConsole.Write(new FigletText("CompMath").Color(Color.Green));
+            AnsiConsole.MarkupLine("[italic blue] \t\t(^) made by: rhawk117 (v) [/]");
+            AnsiConsole.MarkupLine($"[bold green]{divider}[/]");
+            AnsiConsole.MarkupLine("[bold yellow]\t\tPress ENTER to Continue[/]");
+            Console.ReadKey();
+            AnsiConsole.Clear();
         }
 
-        public static string Center(string text)
-        {
-            int padding = (Console.WindowWidth - text.Length) / 2;
-            return new string(' ', padding) + text;
-        }
+        public static void InfoMessage(string text) =>
+            AnsiConsole.MarkupLine($"[bold green](i) {text} (i)[/]");
+        public static void Welcome(string text) =>
+            AnsiConsole.MarkupLine($"[bold italic cyan] {text} [/]");
 
 
+        public static void ErrorMessage(string errorMsg) =>
+            AnsiConsole.MarkupLine($"[bold red](!) {errorMsg} (!)[/]");
 
+        public static void VerboseMessage(string verboseInfo) =>
+            AnsiConsole.MarkupLine($"[italic blue](*) {verboseInfo} (*)[/]");
 
+        public static void ConvertedOutput(string convertedNumber) =>
+            AnsiConsole.MarkupLine($"[bold yellow](>) {convertedNumber} (<)[/]");
     }
 }
