@@ -21,9 +21,9 @@ namespace compmath
 
         public static void InfoMessage(string text) =>
             AnsiConsole.MarkupLine($"[bold green](i) {text} (i)[/]");
+
         public static void Welcome(string text) =>
             AnsiConsole.MarkupLine($"[bold italic cyan] {text} [/]");
-
 
         public static void ErrorMessage(string errorMsg) =>
             AnsiConsole.MarkupLine($"[bold red](!) {errorMsg} (!)[/]");

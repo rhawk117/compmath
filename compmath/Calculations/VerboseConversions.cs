@@ -1,10 +1,6 @@
 ﻿using Spectre.Console;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace compmath
 {
@@ -49,7 +45,7 @@ namespace compmath
                 int value = digit * (int)Math.Pow(2, i);
                 result += value;
                 Prompts.VerboseMessage(string.Format("Digit {0} at position {1} contributes {2}", digit, i, value));
-                Console.ReadLine();
+                Console.ReadKey();
             }
 
             Prompts.ConvertedOutput(string.Format("Conversion Complete: The decimal representation is: {0}", result));
@@ -138,6 +134,7 @@ namespace compmath
         {
             Prompts.VerboseMessage(string.Format("Converting {0} to decimal:", hexNumber));
             Prompts.VerboseMessage("Press Enter to continue through each step.");
+
             Console.ReadKey();
 
             int result = 0;

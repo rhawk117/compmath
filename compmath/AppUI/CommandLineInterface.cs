@@ -1,21 +1,17 @@
 ﻿using Spectre.Console;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace compmath
 {
-    class CommandLineInterface
+    public class CommandLineInterface
     {
-        private Converter _converter;
-        private VerboseConversions _verboseConverter;
+        private Converter standardCalc;
+        private VerboseConversions verboseCalc;
 
         public CommandLineInterface(Converter converter, VerboseConversions verboseConverter)
         {
-            _converter = converter;
-            _verboseConverter = verboseConverter;
+            standardCalc = converter;
+            verboseCalc = verboseConverter;
         }
 
         public void RunInteractive()
@@ -47,6 +43,7 @@ namespace compmath
 
             switch (args[0].ToLower())
             {
+                case "exit": return;
 
                 case "decimal2binary":
                 case "binary2decimal":
@@ -133,22 +130,22 @@ namespace compmath
             switch (command.ToLower())
             {
                 case "decimal2binary":
-                    return _verboseConverter.DecimalToBinary(int.Parse(input));
+                    return verboseCalc.DecimalToBinary(int.Parse(input));
 
                 case "binary2decimal":
-                    return _verboseConverter.BinaryToDecimal(input);
+                    return verboseCalc.BinaryToDecimal(input);
 
                 case "hex2binary":
-                    return _verboseConverter.HexToBinary(input);
+                    return verboseCalc.HexToBinary(input);
 
                 case "binary2hex":
-                    return _verboseConverter.BinaryToHex(input);
+                    return verboseCalc.BinaryToHex(input);
 
                 case "decimal2hex":
-                    return _verboseConverter.DecimalToHex(int.Parse(input));
+                    return verboseCalc.DecimalToHex(int.Parse(input));
 
                 case "hex2decimal":
-                    return _verboseConverter.HexToDecimal(input);
+                    return verboseCalc.HexToDecimal(input);
 
                 default:
                     throw new ArgumentException("Invalid command");
@@ -160,22 +157,22 @@ namespace compmath
             switch (command.ToLower())
             {
                 case "decimal2binary":
-                    return _converter.DecimalToBinary(int.Parse(input));
+                    return standardCalc.DecimalToBinary(int.Parse(input));
 
                 case "binary2decimal":
-                    return _converter.BinaryToDecimal(input).ToString();
+                    return standardCalc.BinaryToDecimal(input).ToString();
 
                 case "hex2binary":
-                    return _converter.HexToBinary(input);
+                    return standardCalc.HexToBinary(input);
 
                 case "binary2hex":
-                    return _converter.BinaryToHex(input);
+                    return standardCalc.BinaryToHex(input);
 
                 case "decimal2hex":
-                    return _converter.DecimalToHex(int.Parse(input));
+                    return standardCalc.DecimalToHex(int.Parse(input));
 
                 case "hex2decimal":
-                    return _converter.HexToDecimal(input).ToString();
+                    return standardCalc.HexToDecimal(input).ToString();
 
                 default:
                     throw new ArgumentException("Invalid command");
